@@ -10,7 +10,7 @@
 	* local datapath = "C:\Users\dbrewer30\Dropbox\teaching\Courses\BrewerPhDEnv\Homeworks\phdee-2023-DB\sample_code\output" // Typically, where you keep the data and where you want the outputs to go will be different.  In this sample code, this is not the case so I don't specify a data path.
 	local outputpath = "/Users/mk/Desktop/Spring 2023/Environment Econ 2/homeworks/phdee-2023-MC/homework1/output" 
 	
-	cd "`outputpath'"
+		cd "`outputpath'"
 	
 * Download and use plotplainblind scheme
 
@@ -43,7 +43,7 @@
 * Create summary statistics table
 
 	* Generate estimates of mean and std dev
-		ssc install estout
+	
 		eststo summary: estpost su x1 x2 yvar
 	
 	* Generate the LaTeX table using esttab in this case
@@ -118,12 +118,11 @@
 		
 	* Write a table using outreg2
 	
-		ssc install outreg2
 		outreg2 [bootreg] using sampleoutput_stata.tex, label 2aster tex(frag) dec(2) replace ctitle("Ordinary least squares")
 		
 * Plot coefficients using coefplot
 	
-	ssc install coefplot
 	coefplot, vertical yline(0) rename(_cons = "Constant") ytitle("Coefficient estimate")
 	
 	graph export samplebars_stata.pdf, replace
+	
