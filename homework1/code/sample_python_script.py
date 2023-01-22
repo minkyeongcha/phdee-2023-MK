@@ -47,15 +47,19 @@ data = pd.DataFrame(np.concatenate([yvar,xvars], axis = 1),columns = ['Outcome',
 # Generate a table of means and standard deviations for the observed variables (there are faster ways to do this that are less general)
 ## Generate means
 means = data.mean()
+print(means)
 
 ## Generate standard deviations
 stdev = data.std()
+print(stdev)
 
 ## Get number of observations
 nobs2 = data.count().min()
 
 ## Set the row and column names
 rownames = pd.concat([pd.Series(['Outcome','Variable 1','Variable 2', 'Observations']),pd.Series([' ',' ',' '])],axis = 1).stack() # Note this stacks an empty list to make room for stdevs
+print(rownames)
+
 colnames = [('Mean','(s.d.)')] # Two rows of column names
 
 ## Format means and std devs to display to two decimal places
@@ -64,6 +68,7 @@ stdev = stdev.map('({:.2f})'.format)
 
 ## Align std deviations under means and add observations
 col0 = pd.concat([means,stdev,pd.Series(nobs2)],axis = 1).stack()
+print(col0)
 
 ## Add column and row labels.  Convert to dataframe (helps when you export it)
 col0 = pd.DataFrame(col0)

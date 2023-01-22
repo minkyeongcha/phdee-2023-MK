@@ -1,0 +1,16 @@
+	(1)
+VARIABLES	Ordinary least squares
+	
+sqft	0.615***
+	(0.00678)
+retrofit	-109.7***
+	(7.943)
+temp	3.255*
+	(1.932)
+Constant	-83.60
+	(154.7)
+	
+Observations	1,000
+R-squared	0.919
+Robust standard errors in parentheses	
+*** p<0.01, ** p<0.05, * p<0.1	
