@@ -71,7 +71,7 @@ table1 = pd.concat([col_control,col_treat,col_diff], axis = 1)
 table1.columns = pd.MultiIndex.from_tuples(colnames)
 table1.index = rownames
 
-os.chdir(outputpath) # Output directly to LaTeX folder
+os.chdir(outputpath) 
 
 table1.to_latex('table1_python.tex') 
 
