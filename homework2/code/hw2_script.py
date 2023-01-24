@@ -34,11 +34,12 @@ stdev_control = data[data['retrofit']==0].std().drop('retrofit')
 stdev_treat = data[data['retrofit']==1].std().drop('retrofit')
 
 ## Get number of observations
-nobs_control = data[data['retrofit']==0].count().min()
-nobs_treat= data[data['retrofit']==1].count().min()
+nobs_control = data[data['retrofit']==0].count().max()
+# to get one number, .max() is necessary 
+nobs_treat= data[data['retrofit']==1].count().max()
 
 ## Set the row and column names - from hw1
-rownames = pd.concat([pd.Series(['electricity','sqft','temp', 'Observations']),pd.Series([' ',' ',' '])],axis = 1).stack() # Note this stacks an empty list to make room for stdevs
+rownames = pd.concat([pd.Series(['electricity','sqft','temp', 'Observations']),pd.Series([' ',' ',' '])],axis = 1).stack() 
 colnames = [('Control','(s.d)'),('Treatment','(s.d)'),('difference-in-means','(p-value)')]
 
 ## Format means and std devs to display to two decimal places
@@ -59,6 +60,7 @@ col_treat.index = rownames
 
 ####now working on difference-in-mean tests
 result, pvalue=scipy.ttest_ind(data[data['retrofit']==1].drop('retrofit',1), data[data['retrofit']==0].drop('retrofit',1), equal_var = False)
+#I don't know why we need '1' inside drop(), but otherwise it is not working... 
 result = pd.Series(result,['electricity', 'sqft', 'temp'])
 pvalue = pd.Series(pvalue,['electricity', 'sqft', 'temp'])
 
@@ -85,17 +87,17 @@ kde_fig.savefig('kernel plot.pdf',format='pdf')
 plt.show()
 
 ##OLS
-##1) OLS by hand
-yvar=data['electricity'].to_numpy()
+yvar=data['electricity'].to_numpy() #to calculate matrix manipulation, to_numpy() seems necessary
 xvar=data.drop('electricity', axis=1).to_numpy()
 nobs = np.array(nobs_control+nobs_treat)
-a0 = np.ones( (nobs,1) )
-xvar=np.concatenate((xvar,a0 ), axis=1)
+xvar=sm.add_constant(xvar)
 
-ols_a = np.matmul(np.linalg.inv((np.matmul(xvar.T, xvar))), np.matmul(xvar.T, yvar))
+##1) OLS by hand
+ols_a = np.matmul(np.linalg.inv((np.matmul(xvar.T, xvar))), np.matmul(xvar.T, yvar)) #referring to https://thetarzan.wordpress.com/2012/10/27/calculate-ols-regression-manually-in-python-using-numpy/
 ols_a=np.around(ols_a, decimals=2)
 
 ##2) by simulated least squares
+#referring to the example in the official document: https://docs.scipy.org/doc/scipy/tutorial/optimize.html
 from scipy.optimize import minimize
 
 def obj(beta, yvar, xvar):return np.sum((yvar-np.matmul(xvar,beta))**2)
