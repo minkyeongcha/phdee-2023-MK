@@ -49,11 +49,11 @@ marginlist[:,1]=margin_z1(par_sqft, yvar, xvar)
 marginlist[:,2]=margin_z2(par_temp, yvar, xvar)
 marginlist = np.round(marginlist,2).mean(axis=0)
 
-##bootstrap marginal effect - referring to the sample code in homework 1
+##bootstrap OLS estimates and average marginal effect - referring to the sample code in homework 1
 ##setting
 np.random.seed(123456)
 
-bidx = np.random.choice(nobs,(nobs,reps)) # Generates random numbers on the interval [0,nobs3] and produces a nobs3 x breps sized array
+bidx = np.random.choice(nobs,(nobs,reps)) 
 
 #empty arrays that we can record bootstrap results
 olslist = np.empty((reps,params))
@@ -61,7 +61,6 @@ margin=np.empty((reps,params-1))
 margin2=np.empty((reps,params-1))
 
 data2=pd.concat([yvar,xvar], axis=1)
-#data2=pd.DataFrame(data2,columns = ['electricity','retrofit','temp','sqft','constant'])
 
 ## Sample with replacement to get the size of the sample on each iteration
 for r in range(reps):
@@ -102,7 +101,7 @@ marginlist=np.round(marginlist,2)
 olslist2=pd.DataFrame(olscoef)
 marginlist2=pd.DataFrame(marginlist)
 
-#I have different marginal effect estimates, so I am reporting both
+#I have different average marginal effect estimates, so I am reporting both
 margin2=np.round(margin2, 2)
 marginlist3=pd.DataFrame(margin2)
 
