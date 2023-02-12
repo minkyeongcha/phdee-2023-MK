@@ -79,7 +79,7 @@ for r in range(reps):
     margin[:,0]=margin_d1(par_retrofit2, yvar2, xvar2)
     margin[:,1]=margin_z1(par_sqft2, yvar2, xvar2)
     margin[:,2]=margin_z2(par_temp2, yvar2, xvar2)
-    margin2 = np.mean(margin,axis = 0)
+    margin2 = np.mean(margin,axis = 0)  #just to compare mean estimates 
     
 ## Extract 2.5th and 97.5th percentile
 lb_ols = np.percentile(olslist,2.5,axis = 0,interpolation = 'lower')
