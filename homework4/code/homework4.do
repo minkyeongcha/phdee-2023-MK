@@ -30,6 +30,7 @@
 	
 	reg bycatch i.firm i.month  tr firmsize salmon shrimp,noconstant vce(cluster firm)
 	
+	*referring to https://www.stata.com/statalist/archive/2010-09/msg00673.html
 	foreach v of varlist bycatch firmsize salmon month shrimp tr {
 	bysort firm: egen mean_`v'=mean(`v')
 	g dem_`v'=`v'-mean_`v'
