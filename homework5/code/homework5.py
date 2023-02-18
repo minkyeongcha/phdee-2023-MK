@@ -133,6 +133,7 @@ table1.to_latex('table1_python.tex')
 
 ##Q4
 GMM_4 = IVGMM.from_formula('price ~ 1 + car + [mpg ~ weight]',data).fit()
+#default: robust SE
 GMM_param=pd.DataFrame(GMM_4.params.to_numpy())
 GMM_param=np.round(GMM_param,2)
 
