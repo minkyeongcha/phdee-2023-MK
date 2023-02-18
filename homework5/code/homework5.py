@@ -20,9 +20,9 @@ data=pd.read_csv('/Users/mk/Desktop/Spring 2023/Environment Econ 2/homeworks/phd
 
 ###Q1 
 xvar=pd.concat([data['mpg'], data['car']], axis=1)
-xvar=sm.add_constant(xvar1,prepend=True)
+xvar=sm.add_constant(xvar,prepend=True)
 yvar=data['price']    
-ols=sm.OLS(yvar,xvar).fit()
+ols=sm.OLS(yvar,xvar).fit(cov_type = "HC0")
 olscoef=ols.params
 olsse=olscoef/ols.tvalues
 
@@ -32,7 +32,7 @@ xvar=data['car']
 
 #a)
 zvar_a1=data['weight'] 
-xvar_a1=pd.concat([zvar_a1, xvar],axis = 1)
+xvar_a1=pd.concat([zvar_a1, xvar],axis =1)
 xvar_a1=sm.add_constant(xvar_a1,prepend=True)
 yvar_a1=data['mpg']
 ols_a1=sm.OLS(yvar_a1,xvar_a1).fit()
@@ -46,7 +46,7 @@ f_stat_a1 = np.round(f_stat_a1,2)
 
 xvar_a2=pd.concat([mpg_hat1,xvar],axis = 1)
 xvar_a2=sm.add_constant(xvar_a2,prepend=True)
-ols_a2=sm.OLS(yvar,xvar_a2).fit()
+ols_a2=sm.OLS(yvar,xvar_a2).fit(cov_type = "HC0")
 ols_param_a=ols_a2.params.to_numpy()
 ols_param_a=np.round(ols_param_a,2)
 ols_param_a=pd.DataFrame(ols_param_a)
@@ -63,7 +63,7 @@ zvar_b1=data['weight']**2
 xvar_b1=pd.concat([zvar_b1, xvar],axis = 1)
 xvar_b1=sm.add_constant(xvar_b1,prepend=True)
 yvar_b1=data['mpg']
-ols_b1=sm.OLS(yvar_b1,xvar_b1).fit()
+ols_b1=sm.OLS(yvar_b1,xvar_b1).fit(cov_type = "HC0")
 mpg_hat2 = ols_b1.predict(xvar_b1)
 nobs_b = xvar_b1.count().max()
 
@@ -73,7 +73,7 @@ f_stat_b1 = np.round(f_stat_b1,2)
 
 xvar_b2=pd.concat([mpg_hat2,xvar],axis = 1)
 xvar_b2=sm.add_constant(xvar_b2,prepend=True)
-ols_b2=sm.OLS(yvar,xvar_b2).fit()
+ols_b2=sm.OLS(yvar,xvar_b2).fit(cov_type = "HC0")
 ols_param_b=ols_b2.params.to_numpy()
 ols_param_b=np.round(ols_param_b,2)
 ols_param_b=pd.DataFrame(ols_param_b)
@@ -88,7 +88,7 @@ zvar_c1=data['height']
 xvar_c1=pd.concat([zvar_c1, xvar],axis = 1)
 xvar_c1=sm.add_constant(xvar_c1,prepend=True)
 yvar_c1=data['mpg']
-ols_c1=sm.OLS(yvar_c1,xvar_c1).fit()
+ols_c1=sm.OLS(yvar_c1,xvar_c1).fit(cov_type = "HC0")
 mpg_hat3 = ols_c1.predict(xvar_c1)
 nobs_c = xvar_c1.count().max()
 
@@ -125,12 +125,11 @@ col_c=col_c.append(pd.Series(nobs_c))
 rownames =pd.concat([pd.Series(['constant','mpg','car(sedan)','F-statistic','Observations']),pd.Series([' ',' ',' ',])],axis = 1).stack()
 colnames = pd.Series(['(a)','(b)', '(c)'])
 
-
 table1 = pd.concat([col_a, col_b, col_c], axis=1)
 table1.index = rownames
 table1.columns = colnames
 
-table1.to_latex('/Users/mk/Desktop/Spring 2023/Environment Econ 2/homeworks/phdee-2023-MC/homework5/output/table1_python.tex') 
+table1.to_latex('table1_python.tex') 
 
 ##Q4
 GMM_4 = IVGMM.from_formula('price ~ 1 + car + [mpg ~ weight]',data).fit()
@@ -146,6 +145,6 @@ col_GMM=pd.concat([GMM_param,ci_GMM], axis = 1).stack()
 rownames =pd.concat([pd.Series(['constant','car','mpg']),pd.Series([' ',' ',' ',])],axis = 1).stack()
 col_GMM.index=rownames
 
-col_GMM.to_latex('/Users/mk/Desktop/Spring 2023/Environment Econ 2/homeworks/phdee-2023-MC/homework5/output/table2_python.tex') 
+col_GMM.to_latex('table2_python.tex') 
 
 
