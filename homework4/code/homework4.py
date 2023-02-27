@@ -76,8 +76,9 @@ ols_result1 = pd.concat([pd.Series(olscoef1), pd.Series(olsse1)],axis = 1).stack
               
 #b
 time = pd.get_dummies(fish['month'],prefix = 'time',drop_first = True) #time dummy
-firm_dum = pd.get_dummies(fish['firm'],prefix = 'firm',drop_first = True)
-xvar2=pd.concat([firm_dum,time,fish['treated'],fish['tr']], axis=1)
+firm_dum = pd.get_dummies(fish['firm'],prefix = 'firm')
+xvar2=pd.concat([firm_dum, time,fish['tr']], axis=1)
+
 yvar2=fish['bycatch']    
 
 ols2=sm.OLS(yvar2,xvar2).fit(cov_type = 'cluster', cov_kwds={"groups":fish['firm']})
