@@ -134,7 +134,7 @@ table1 = pd.concat([col_3, col_4, col_5], axis=1)
 table1.index = rownames
 table1.columns = colnames
 
-table1.to_latex('/Users/mk/Desktop/Spring 2023/Environment Econ 2/homeworks/phdee-2023-MC/homework6/output/table1_python.tex') 
+table1.to_latex('table1_python.tex') 
 
 ###Q6
 zvar=data['mpg'] 
