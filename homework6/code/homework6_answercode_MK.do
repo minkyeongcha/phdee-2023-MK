@@ -25,6 +25,10 @@
 	
 	rdrobust mpg xtilda, c(0) bwselect(mserd) vce(hc0)	
 	
+	rdplot mpg xtilda, nbins(20 20) c(0) p(1) genvars
+	
+	reg price rdplot_hat_y car
+	
 	outreg2 using table1_stata.tex
 
 	rdplot mpg xtilda, c(0) p(1)
