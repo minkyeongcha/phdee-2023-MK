@@ -1,0 +1,12 @@
+	(1)
+VARIABLES	y
+	
+year_2020	95.49
+	(108.0)
+Constant	-17,556***
+	(76.09)
+	
+Observations	35,084
+R-squared	0.000
+Robust standard errors in parentheses	
+*** p<0.01, ** p<0.05, * p<0.1	
